@@ -20,7 +20,7 @@ func (session *Session) NewMetricRealTimeQuery(paths []string, interval uint32) 
 		Interval: interval,
 	}
 
-	err = session.Request("POST", "/api/types/metricRealTimeQuery/instances", "", "", jsonData, &resp)
+	err = session.Request("POST", "/api/types/metricRealTimeQuery/instances", "", "", true, jsonData, &resp)
 
 	return resp, err
 }
@@ -30,7 +30,9 @@ func (session *Session) DeleteMetricRealTimeQuery(queryID int) error {
 
 	URI := fmt.Sprintf("/api/instances/metricRealTimeQuery/%s", strconv.Itoa(queryID))
 
-	err := session.Request("DELETE", URI, "", "", "", "")
+	fmt.Println(URI)
+
+	err := session.Request("DELETE", URI, "", "", false, nil, "")
 
 	return err
 }
@@ -44,7 +46,7 @@ func (session *Session) GetMetricRealTimeQueryResult(queryID int) (resp *types.M
 
 	URI := "/api/types/metricQueryResult/instances"
 
-	err = session.Request("GET", URI, fields, filter, nil, &resp)
+	err = session.Request("GET", URI, fields, filter, true, nil, &resp)
 
 	return resp, err
 }

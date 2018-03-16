@@ -7,6 +7,6 @@ func (session *Session) GetDNSServer() (resp *types.DNSServer, err error) {
 
 	fields := "id,domain,origin,addresses"
 
-	err = session.Request("GET", "/api/types/dnsServer/instances", fields, "", nil, &resp)
+	err = session.Request("GET", "/api/types/dnsServer/instances", fields, "", false, nil, &resp)
 	return resp, err
 }

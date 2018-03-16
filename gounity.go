@@ -76,7 +76,7 @@ func NewSession(server string, insecure bool, username string, password string) 
 }
 
 //Request purpose is to send a Rest API request to the Unity array.
-func (session *Session) Request(method string, URI string, fields string, filter string, body, resp interface{}) error {
+func (session *Session) Request(method string, URI string, fields string, filter string, engineering bool, body, resp interface{}) error {
 
 	if method == "" || URI == "" || resp == nil {
 		return errors.New("Missing method, URI or response interface")
@@ -111,20 +111,26 @@ func (session *Session) Request(method string, URI string, fields string, filter
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-EMC-REST-CLIENT", "true")
 
-	// Create an URL query object
-	a := req.URL.Query()
+	if method != "DELETE" {
+		// Create an URL query object
+		a := req.URL.Query()
 
-	if fields != "" {
-		a.Add("fields", fields)
+		if fields != "" {
+			a.Add("fields", fields)
+		}
+
+		if filter != "" {
+			a.Add("filter", filter)
+		}
+
+		if engineering == true {
+			a.Add("visibility", "Engineering")
+		}
+
+		a.Add("compact", "true")
+
+		req.URL.RawQuery = a.Encode()
 	}
-
-	if filter != "" {
-		a.Add("filter", filter)
-	}
-
-	a.Add("compact", "true")
-
-	req.URL.RawQuery = a.Encode()
 
 	// Perform request
 	httpResp, err := session.http.Do(req)
@@ -144,11 +150,14 @@ func (session *Session) Request(method string, URI string, fields string, filter
 		}
 
 		// Unmarshal the body into a struct
-		err = json.Unmarshal(body, resp)
+		bodyByte := json.Unmarshal(body, resp)
 
-		return err
+		return bodyByte
 	case httpResp.StatusCode == 204:
 		return nil
+
+	case httpResp.StatusCode == 422:
+		return fmt.Errorf("HTTP status codes: %d, detail: %v", httpResp.StatusCode, httpResp.Body)
 
 	default:
 		return fmt.Errorf("HTTP status codes: %d", httpResp.StatusCode)
@@ -157,6 +166,6 @@ func (session *Session) Request(method string, URI string, fields string, filter
 
 //CloseSession purpose is to end the session with the Unity array.
 func (session *Session) CloseSession() (err error) {
-	err = session.Request("POST", "/api/types/loginSessionInfo/action/logout", "", "", nil, nil)
+	err = session.Request("POST", "/api/types/loginSessionInfo/action/logout", "", "", false, nil, nil)
 	return err
 }
