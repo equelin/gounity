@@ -63,3 +63,29 @@ type MetricRealTimeQueryResult struct {
 		} `json:"content"`
 	} `json:"entries"`
 }
+
+//BasicSystemInfo struct
+type BasicSystemInfo struct {
+	Base    string    `json:"@base"`
+	Updated time.Time `json:"updated"`
+	Links   []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+	Entries []struct {
+		Base    string    `json:"@base"`
+		Updated time.Time `json:"updated"`
+		Links   []struct {
+			Rel  string `json:"rel"`
+			Href string `json:"href"`
+		} `json:"links"`
+		Content struct {
+			ID                 string `json:"id"`
+			Model              string `json:"model"`
+			Name               string `json:"name"`
+			SoftwareVersion    string `json:"softwareVersion"`
+			APIVersion         string `json:"apiVersion"`
+			EarliestAPIVersion string `json:"earliestApiVersion"`
+		} `json:"content"`
+	} `json:"entries"`
+}
