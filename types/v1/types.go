@@ -40,6 +40,30 @@ type MetricRealTimeQueryResponse struct {
 	} `json:"content"`
 }
 
+//MetricValueResponse struct
+type MetricValueResponse struct {
+	Base    string    `json:"@base"`
+	Updated time.Time `json:"updated"`
+	Links   []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+	Entries []struct {
+		Base    string    `json:"@base"`
+		Updated time.Time `json:"updated"`
+		Links   []struct {
+			Rel  string `json:"rel"`
+			Href string `json:"href"`
+		} `json:"links"`
+		Content struct {
+			Interval  int         `json:"interval"`
+			Path      string      `json:"path"`
+			Timestamp time.Time   `json:"timestamp"`
+			Values    interface{} `json:"values"`
+		} `json:"content"`
+	} `json:"entries"`
+}
+
 //MetricRealTimeQueryResult struct
 type MetricRealTimeQueryResult struct {
 	Base    string    `json:"@base"`

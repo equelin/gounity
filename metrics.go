@@ -50,3 +50,17 @@ func (session *Session) GetMetricRealTimeQueryResult(queryID int) (resp *types.M
 
 	return resp, err
 }
+
+//GetmetricValue Historical values for requested metrics
+func (session *Session) GetmetricValue(path string) (resp *types.MetricValueResponse, err error) {
+
+	filter := fmt.Sprintf("path eq \"%s\"", path)
+
+	//fields := "queryId,path,timestamp,values"
+
+	URI := "/api/types/metricValue/instances"
+
+	err = session.Request("GET", URI, "", filter, true, nil, &resp)
+
+	return resp, err
+}
