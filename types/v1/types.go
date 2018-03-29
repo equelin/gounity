@@ -113,3 +113,67 @@ type BasicSystemInfo struct {
 		} `json:"content"`
 	} `json:"entries"`
 }
+
+//Pool struct
+type Pool struct {
+	Base    string    `json:"@base"`
+	Updated time.Time `json:"updated"`
+	Links   []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+	Entries []struct {
+		Base    string    `json:"@base"`
+		Updated time.Time `json:"updated"`
+		Links   []struct {
+			Rel  string `json:"rel"`
+			Href string `json:"href"`
+		} `json:"links"`
+		Content struct {
+			ID             string `json:"id"`
+			Name           string `json:"name"`
+			SizeFree       uint64 `json:"sizeFree"`
+			SizeTotal      uint64 `json:"sizeTotal"`
+			SizeUsed       uint64 `json:"sizeUsed"`
+			SizeSubscribed uint64 `json:"sizeSubscribed"`
+		} `json:"content"`
+	} `json:"entries"`
+}
+
+type storageResourceTypeEnum int
+
+const (
+	filesystem storageResourceTypeEnum = iota + 1
+	consistencyGroup
+	vmwarefs
+	vmwareiscsi
+	lun
+	vVolDatastoreFS
+	vVolDatastoreISCSI
+)
+
+//StorageResource struct
+type StorageResource struct {
+	Base    string    `json:"@base"`
+	Updated time.Time `json:"updated"`
+	Links   []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+	Entries []struct {
+		Base    string    `json:"@base"`
+		Updated time.Time `json:"updated"`
+		Links   []struct {
+			Rel  string `json:"rel"`
+			Href string `json:"href"`
+		} `json:"links"`
+		Content struct {
+			ID        string `json:"id"`
+			Name      string `json:"name"`
+			SizeFree  uint64 `json:"sizeFree"`
+			SizeTotal uint64 `json:"sizeTotal"`
+			SizeUsed  uint64 `json:"sizeUsed"`
+			Type      int    `json:"type"`
+		} `json:"content"`
+	} `json:"entries"`
+}
