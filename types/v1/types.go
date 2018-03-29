@@ -168,12 +168,12 @@ type StorageResource struct {
 			Href string `json:"href"`
 		} `json:"links"`
 		Content struct {
-			ID        string `json:"id"`
-			Name      string `json:"name"`
-			SizeFree  uint64 `json:"sizeFree"`
-			SizeTotal uint64 `json:"sizeTotal"`
-			SizeUsed  uint64 `json:"sizeUsed"`
-			Type      int    `json:"type"`
+			ID            string `json:"id"`
+			Name          string `json:"name"`
+			SizeAllocated uint64 `json:"sizeAllocated"`
+			SizeTotal     uint64 `json:"sizeTotal"`
+			SizeUsed      uint64 `json:"sizeUsed"`
+			Type          int    `json:"type"`
 		} `json:"content"`
 	} `json:"entries"`
 }
