@@ -74,16 +74,13 @@ type KpiValueResponse struct {
 	} `json:"links"`
 	Entries []struct {
 		Content struct {
-			Path      string    `json:"path"`
-			StartTime time.Time `json:"startTime"`
-			EndTime   time.Time `json:"endTime"`
-			Interval  int       `json:"interval"`
-			ID        int       `json:"id"`
-			Name      string    `json:"name"`
-			Values    struct {
-				Timestamp time.Time `json:"timestamp"`
-				Value     float64   `json:"value"`
-			} `json:"values"`
+			Path      string                `json:"path"`
+			StartTime time.Time             `json:"startTime"`
+			EndTime   time.Time             `json:"endTime"`
+			Interval  int                   `json:"interval"`
+			ID        string                `json:"id"`
+			Name      string                `json:"name"`
+			Values    map[time.Time]float64 `json:"values"`
 		} `json:"content"`
 	} `json:"entries"`
 }
