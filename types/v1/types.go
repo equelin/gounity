@@ -64,6 +64,30 @@ type MetricValueResponse struct {
 	} `json:"entries"`
 }
 
+//KpiValueResponse struct
+type KpiValueResponse struct {
+	Base    string    `json:"@base"`
+	Updated time.Time `json:"updated"`
+	Links   []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+	Entries []struct {
+		Content struct {
+			Path      string    `json:"path"`
+			StartTime time.Time `json:"startTime"`
+			EndTime   time.Time `json:"endTime"`
+			Interval  int       `json:"interval"`
+			ID        int       `json:"id"`
+			Name      string    `json:"name"`
+			Values    struct {
+				Timestamp time.Time `json:"timestamp"`
+				Value     float64   `json:"value"`
+			} `json:"values"`
+		} `json:"content"`
+	} `json:"entries"`
+}
+
 //MetricRealTimeQueryResult struct
 type MetricRealTimeQueryResult struct {
 	Base    string    `json:"@base"`

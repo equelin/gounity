@@ -64,3 +64,17 @@ func (session *Session) GetmetricValue(path string) (resp *types.MetricValueResp
 
 	return resp, err
 }
+
+//GetkpiValue Historical values for requested metrics
+func (session *Session) GetkpiValue(path string) (resp *types.KpiValueResponse, err error) {
+
+	filter := fmt.Sprintf("path eq \"%s\"", path)
+
+	//fields := "queryId,path,timestamp,values"
+
+	URI := "/api/types/kpiValue/instances"
+
+	err = session.Request("GET", URI, "", filter, true, nil, &resp)
+
+	return resp, err
+}
